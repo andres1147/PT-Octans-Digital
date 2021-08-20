@@ -1,0 +1,4 @@
+INSERT INTO rol (id_rol, nombre) VALUES (1,'ADMINISTRADOR'), (2, 'AUDITOR'), (3,'AUXILIAR'); 
+
+INSERT INTO usuario (id_rol, nombre, activo) VALUES (1,'ADMINISTRADOR', 'A'), (2,'ADMINISTRADOR', 'A'),
+(3,'ADMINISTRADOR', 'A'), (3,'ADMINISTRADOR', 'I');
