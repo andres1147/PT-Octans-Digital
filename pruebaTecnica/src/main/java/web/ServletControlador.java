@@ -9,9 +9,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.swing.text.Document;
 
+/**
+ * Esta clase controla los jsp a partir de las reglas de negocio
+ *
+ * @author: Andres Garces
+ * @version: 19/08/2021
+ */
 @WebServlet("/ServletControlador")
 public class ServletControlador extends HttpServlet {
 
+    /**
+     * Controla la interaccion de las acciones enviadas por GET de los botones
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,6 +50,9 @@ public class ServletControlador extends HttpServlet {
         }
     }
 
+     /**
+     * Ejecuta el comportamiento de todos los componentes al principio de la ejecucion
+     */
     private void accionDefault(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Usuario> usuarios = new UsuarioDaoJDBC().listar();
@@ -53,45 +65,80 @@ public class ServletControlador extends HttpServlet {
 
     private void editarUsuario(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String funcionGuardar = "modificar";
         //Recuperamos el idUsuario
         int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
         Usuario usuario = new UsuarioDaoJDBC().encontrar(new Usuario(idUsuario));
         request.setAttribute("usuario", usuario);
 
+        request.setAttribute("funcionGuardar", funcionGuardar);
+
+        this.validarFormulario(request, response, usuario);
+
         String habilitar = "si";
-        //String operacion = "editar";
-        //request.setAttribute("operacion", operacion);
         request.setAttribute("habilitar", habilitar);
 
-        //String jspEditar = "/WEB-INF/paginas/usuario/editarUsuario.jsp";
-        //request.getRequestDispatcher(jspEditar).forward(request, response);
         request.getRequestDispatcher("usuarios.jsp").forward(request, response);
+    }
+
+    private void validarFormulario(HttpServletRequest request, HttpServletResponse response, Usuario usuario)
+            throws ServletException, IOException {
+
+        String rolSelect = "";
+        String checkbox;
+
+        //Bloque validacion checkbox
+        if (usuario.getActivo() == 'S') {
+            checkbox = "si";
+        } else {
+            checkbox = "no";
+        }
+        request.setAttribute("checkbox", checkbox);
+        //Fin bloque validacion checkbox
+
+        //Bloque validacion select
+        switch (usuario.getIdRol()) {
+            case 1:
+                rolSelect = "administrador";
+            case 2:
+                rolSelect = "auditor";
+            case 3:
+                rolSelect = "auxiliar";
+        }
+        request.setAttribute("rolSelect", rolSelect);
+        //Fin bloque validacion select
     }
 
     private void visualizarUsuario(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Recuperamos el idUsuario
         int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
         Usuario usuario = new UsuarioDaoJDBC().encontrar(new Usuario(idUsuario));
+
+        this.validarFormulario(request, response, usuario);
+
         request.setAttribute("usuario", usuario);
 
         String habilitar = "no";
+        String ver = "si";
         request.setAttribute("habilitar", habilitar);
+        request.setAttribute("ver", ver);
 
-        //String jspEditar = "/WEB-INF/paginas/usuario/editarUsuario.jsp";
-        //request.getRequestDispatcher(jspEditar).forward(request, response);
         request.getRequestDispatcher("usuarios.jsp").forward(request, response);
     }
 
     private void desbloquearInput(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String habilitar = "si";
-        String operacion = "crear";
+        String funcionGuardar = "guardar";
         request.setAttribute("habilitar", habilitar);
-        request.setAttribute("operacion", operacion);
+        request.setAttribute("funcionGuardar", funcionGuardar);
         request.getRequestDispatcher("usuarios.jsp").forward(request, response);
     }
 
+     /**
+     * Controla la interaccion de las acciones enviadas por POST de los botones
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -145,11 +192,9 @@ public class ServletControlador extends HttpServlet {
         String nombre = request.getParameter("nombre");
 
         //Insertamos el nuevo objeto en la base de datos
-        //int registrosModificados = new UsuarioDaoJDBC().listarConsulta(nombre);
         List<Usuario> usuarios = new UsuarioDaoJDBC().listarConsulta(nombre);
         HttpSession sesion = request.getSession();
         sesion.setAttribute("usuarios", usuarios);
-        //request.getRequestDispatcher("usuarios.jsp").forward(request, response);
         response.sendRedirect("usuarios.jsp");
     }
 

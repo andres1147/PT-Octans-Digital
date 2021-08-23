@@ -16,9 +16,8 @@
 
                         <div class="mx-2 py-2 mb-2">
                             <button class="btn btn-primary" type="submit">Consultar</button>
-                            <button class="btn btn-primary" type="reset">Limpiar</button>
                             <a href="${pageContext.request.contextPath}/ServletControlador?accion=resetear"
-                               class="btn btn-primary">Reset
+                               class="btn btn-primary" type="reset">Limpiar
                             </a>
                         </div>
                         <div class="card-body">
@@ -84,16 +83,17 @@
                     <div class="card-header bg-primary text-white">
                         <h4>Informacion de Usuario</h4>
                     </div>
-                    <form action="${pageContext.request.contextPath}/ServletControlador?accion=${habilitar eq 'si' ? 'insertar' : 'modificar&idUsuario=${usuario.idUsuario}'}"
+                    <form action="${pageContext.request.contextPath}/ServletControlador?accion=${funcionGuardar eq 'guardar' ? 'insertar' : 'modificar&idUsuario='}${usuario.idUsuario}"
                           method="POST" class="was-validated">
 
                         <div class="mx-2 py-2 mb-2">
+
                             <button class="btn btn-primary" type="submit" ${habilitar eq 'si' ? '' : 'disabled' }>Guardar</button>
-                            <a href="${pageContext.request.contextPath}/ServletControlador?accion=editar&idUsuario=${usuario.idUsuario}"
-                               class="btn btn-primary" disabled>Editar
+                            <a data-role="button" type="button" href="${pageContext.request.contextPath}/ServletControlador?accion=editar&idUsuario=${usuario.idUsuario}"
+                               class="btn btn-primary" ${ver eq 'si' ? '' : 'style="pointer-events: none; background-color:#62A1FE"'}>Editar
                             </a>
-                            <a href="${pageContext.request.contextPath}/ServletControlador?accion=eliminar&idUsuario=${usuario.idUsuario}" 
-                               class="btn btn-primary" disabled='true'>Eliminar Usuario
+                            <a data-role="button" type="button" href="${pageContext.request.contextPath}/ServletControlador?accion=eliminar&idUsuario=${usuario.idUsuario}" 
+                               class="btn btn-primary" ${ver eq 'si' ? '' : 'style="pointer-events: none; background-color:#62A1FE"'}>Eliminar
                             </a>
                         </div>
 
@@ -108,22 +108,28 @@
                                 <input type="text" class="form-control" name="nombre" required value="${usuario.nombre}"
                                        ${habilitar eq 'si' ? '' : 'disabled' }>
                             </div>
+
                             <div class="form-group">
                                 <label for="rol">Rol</label>
-                                <input type="number" class="form-control" name="rol" required value="${usuario.idRol}"
-                                       ${habilitar eq 'si' ? '' : 'disabled'}>
+                                <select class="form-select" name="rol" aria-label="Default select example" required value="${usuario.idRol}"
+                                        ${habilitar eq 'si' ? '' : 'disabled' }>
+                                    <option >Open this select menu</option>
+                                    <option ${rolSelect eq 'administrador' ? 'selected' : '' } value="1" >Administrador</option>
+                                    <option ${rolSelect eq 'auditor' ? 'selected' : '' } value="2" >Auditor</option>
+                                    <option ${rolSelect eq 'auxiliar' ? 'selected' : '' } value="3" >Auxiliar</option>
+                                </select>
+
                             </div>
                             <div class="form-group">
-                                <label for="activo">Activo</label>
-                                <!--<input type="text" class="form-control" name="activo" required >-->
+                                <label for="activo" >Activo</label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="activo" id="inlineRadio1" value="S"
-                                           ${habilitar eq 'si' ? '' : 'disabled'}>
-                                    <label class="form-check-label" for="activo" ${habilitar eq 'si' ? '' : 'disabled'}>S</label>
+                                           ${habilitar eq 'si' ? '' : 'disabled'} ${checkbox eq 'si' ? 'checked="checked"' : '' }>
+                                    <label class="form-check-label" for="activo">S</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="activo" id="inlineRadio2" value="N"
-                                           ${habilitar eq 'si' ? '' : 'disabled'}>
+                                           ${habilitar eq 'si' ? '' : 'disabled'} ${checkbox eq 'no' ? 'checked="checked"' : '' }>
                                     <label class="form-check-label" for="activo" >N</label>
                                 </div>
                             </div>

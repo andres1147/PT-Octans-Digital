@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `prueba_tecnica` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `prueba_tecnica`;
 -- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
 --
 -- Host: localhost    Database: prueba_tecnica
@@ -54,7 +56,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id_usuario`),
   KEY `id_rol_idx` (`id_rol`),
   CONSTRAINT `id_rol` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +65,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (2,2,'Camilo','A'),(3,3,'Sofia','A'),(4,3,'Andres','I'),(17,2,'Camilo','A'),(19,3,'Sofia','A'),(20,1,'yicela','f'),(22,1,'fdsgsdgs','S'),(23,1,'AgroChat','N'),(24,2,'Sofiadd','S'),(25,1,'andres garces','S'),(26,2,'Camila','N'),(27,1,'Sofia','S'),(28,2,'AgroChat','S'),(29,2,'AgroChatmono','N'),(30,3,'of','N');
+INSERT INTO `usuario` VALUES (22,1,'fdsgsdgs','S'),(23,1,'AgroChat','N'),(24,2,'Sofiadd','S'),(25,3,'andres garcia','S'),(26,2,'Camila','N'),(27,1,'Sofia','S'),(28,2,'AgroChat','S'),(29,2,'AgroChatmono','N'),(30,3,'of','N'),(43,1,'mariacamila','S'),(44,3,'laravel','N'),(45,2,'dsafdsafdsafa','S'),(46,3,'laravela','N'),(47,2,'laravellaaaaa','N'),(48,3,'holaholhpañadasfandres','S'),(49,3,'andresandresandres','S'),(51,1,'dsfasfdsaf','S'),(52,3,'sofiasofiasofia','N');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -76,4 +78,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-19 21:08:43
+-- Dump completed on 2021-08-23 13:14:04
